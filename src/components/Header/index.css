@@ -1,4 +1,10 @@
 .header {
     height: 8rem;
-    background-color: rgb(26, 26, 26);
+    background: hsla(0, 0%, 0%, 1);
+
+    background: linear-gradient(45deg, hsla(0, 0%, 0%, 1) 0%, hsla(240, 1%, 38%, 1) 91%);
+    
+    background: -moz-linear-gradient(45deg, hsla(0, 0%, 0%, 1) 0%, hsla(240, 1%, 38%, 1) 91%);
+    
+    background: -webkit-linear-gradient(45deg, hsla(0, 0%, 0%, 1) 0%, hsla(240, 1%, 38%, 1) 91%);
 }
