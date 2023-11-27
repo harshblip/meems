@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios';
 import './index.css'
 
 export default function ControlledComponent() {
@@ -16,28 +15,29 @@ export default function ControlledComponent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(first + ' ');
-    console.log(second);
   }
 
   const [memeUrl, setMemeUrl] = useState('');
 
   const fetchMeme = async () => {
-    const url = 'http://alpha-meme-maker.herokuapp.com/memes/:id';
+    const url = 'https://api.jsonbin.io/v3/b/6564795812a5d376599f8c57';
     const options = {
       method: 'GET',
     };
-
+   
     try {
       const response = await fetch(url, options);
-      const result = await response.text();
-      console.log(result.data);
-      setMemeUrl(result.image);
+      const result = await response.json();
+      const memes = result.record.data.memes;
+      const randomIndex = Math.floor(Math.random() * memes.length);
+      const randomeMemeUrl = memes[randomIndex].url;
+      console.log(randomeMemeUrl);
+      setMemeUrl(randomeMemeUrl);
     } catch (error) {
       console.error(error);
     }
-  };
-
+   };   
+  
   return (
     <form onSubmit={handleSubmit}>
       <div className='flex flex-col font-notosans mb-4 mt-4'>
@@ -58,9 +58,9 @@ export default function ControlledComponent() {
           />
         </label>
       </div>
-      <img src={memeUrl} alt="meme" width='50' className='rounded-lg' />
+      <img src={memeUrl} alt="meme"  className='rounded-lg w-[80%] ml-9' />
       <button
-        className='w-[90%] mr-4 ml-3 bg-white border hover:bg-slate-700  hover:border-white transition-all hover:text-white  border-black rounded-lg p-3 text-black'
+        className='w-[90%] mr-4 ml-3 mt-4  bg-white border hover:bg-slate-700  hover:border-white transition-all hover:text-white border-black rounded-lg p-3 text-black'
         onClick={fetchMeme}
       >
         Get a new meem image 🎉
