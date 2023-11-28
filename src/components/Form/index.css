@@ -5,3 +5,7 @@
 .header {
     background: linear-gradient(to bottom, black 0%, black 25%, white 20%, #f3f1f1 100%);
 }
+
+input:focus { 
+    border: 2px dashed black;
+}

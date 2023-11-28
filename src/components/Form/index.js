@@ -9,8 +9,10 @@ export default function ControlledComponent() {
   const [cliked, setcliked] = useState(false);
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
-  const handleDoubleClick = () => {
+  const handleDoubleClick = (e) => {
+    setPosition({ x:  e.clientX, y: e.clientY });
     setShowInput(!showInput);
   }
 
@@ -67,12 +69,17 @@ export default function ControlledComponent() {
           value={inputValue}
           onChange={handleChange}
           onBlur={handleBlur}
+          style={{ position: 'absolute', left: position.x, top: position.y, background: 'transparent', border: '2px dashed black' }}
+          className = 'font-memefont text-lg'
         />
       ) : (
         <Draggable>
           <p
             onDoubleClick={handleDoubleClick}
-          > {inputValue} </p>
+            style = {{ position: 'absolute', left: position.x, top: position.y }}
+            className = 'font-memefont text-lg'
+          > {inputValue} 
+          </p>
         </Draggable>
       )}
       <button

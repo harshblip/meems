@@ -9,6 +9,7 @@ module.exports = {
         "poppins": ['Poppins', 'sans-serif'],
         "monts": ['Montserrat', 'sans-serif'],
         "notosans": ['Noto Sans Mandaic', 'sans-serif'],
+        "memefont": ['Bebas Neue', 'sans-serif'],
       }
     },
   },
