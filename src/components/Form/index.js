@@ -1,30 +1,33 @@
 import { useState } from 'react';
+import arpitB from '../../media/arpit-bala-celebration.gif';
+import Draggable from 'react-draggable';
 import './index.css'
 
 export default function ControlledComponent() {
-  const [first, setFirst] = useState("");
-  const [second, setSecond] = useState("");
-
-  const handleChangeF = (e) => {
-    setFirst(e.target.value);
-  };
-
-  const handleChangeS = (e) => {
-    setSecond(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-  }
 
   const [memeUrl, setMemeUrl] = useState('');
+  const [cliked, setcliked] = useState(false);
+  const [showInput, setShowInput] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleDoubleClick = () => {
+    setShowInput(!showInput);
+  }
+
+  const handleBlur = () => {
+    setShowInput(false);
+  }
+
+  const handleChange = (e) => {
+    setInputValue(e.target.value);
+  }
 
   const fetchMeme = async () => {
     const url = 'https://api.jsonbin.io/v3/b/6564795812a5d376599f8c57';
     const options = {
       method: 'GET',
     };
-   
+    setcliked(true);
     try {
       const response = await fetch(url, options);
       const result = await response.json();
@@ -36,35 +39,48 @@ export default function ControlledComponent() {
     } catch (error) {
       console.error(error);
     }
-   };   
-  
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
+    <div className='header justify-center space-x-5 font-notosans flex flex-col rounded-xl p-8'>
+
+      <img
+        src={arpitB}
+        alt='feels'
+        width='80'
+        className='bg-transparent rounded-xl object-contain'
+      />
+
+      <h2 className='text-white text-2xl'> Meem Generator </h2>
       <div className='flex flex-col font-notosans mb-4 mt-4'>
-        <label className='flex space-x-4 ml-6'>
-          <input
-            type="text"
-            first={setFirst}
-            onChange={handleChangeF}
-            placeholder='Shut up'
-            className='w-40 h-4 border p-4 text-xs rounded-lg f '
-          />
-          <input
-            type="text"
-            second={setSecond}
-            onChange={handleChangeS}
-            placeholder='Take my money'
-            className='w-40 h-4 border p-4 text-xs rounded-lg f'
-          />
-        </label>
       </div>
-      <img src={memeUrl} alt="meme"  className='rounded-lg w-[80%] ml-9' />
+      {cliked ?
+        <img
+          src={memeUrl}
+          alt="meme"
+          className='rounded-lg w-[80%] ml-9 object-contain '
+          onDoubleClick={handleDoubleClick}
+        /> : ""}
+      {showInput ? (
+        <input
+          type='text'
+          value={inputValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      ) : (
+        <Draggable>
+          <p
+            onDoubleClick={handleDoubleClick}
+          > {inputValue} </p>
+        </Draggable>
+      )}
       <button
         className='w-[90%] mr-4 ml-3 mt-4  bg-white border hover:bg-slate-700  hover:border-white transition-all hover:text-white border-black rounded-lg p-3 text-black'
         onClick={fetchMeme}
       >
         Get a new meem image 🎉
       </button>
-    </form>
+    </div>
   )
 };

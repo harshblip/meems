@@ -16,7 +16,7 @@ export default function Header() {
         alt='feels'
         width='80'
         onMouseEnter={consoleOutput}
-        className='bg-transparent rounded-xl object-contain  hover:{consoleOutput} '
+        className='bg-transparent rounded-xl object-contain'
       />
 
       <h2 className='text-white text-2xl mt-4'> Meem Generator </h2>
