@@ -78,7 +78,7 @@ export default function ControlledComponent() {
             onDoubleClick={handleDoubleClick}
             style = {{ position: 'absolute', left: position.x, top: position.y }}
             className = 'font-memefont text-lg'
-          > {inputValue} 
+          > {inputValue}
           </p>
         </Draggable>
       )}
