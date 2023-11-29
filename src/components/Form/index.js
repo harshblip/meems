@@ -4,24 +4,28 @@ import Draggable from 'react-draggable';
 import './index.css'
 
 export default function ControlledComponent() {
-
   const [memeUrl, setMemeUrl] = useState('');
   const [cliked, setcliked] = useState(false);
   const [showInput, setShowInput] = useState(false);
-  const [inputValue, setInputValue] = useState('');
+  const [inputValues, setInputValues] = useState([]);
   const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [positions, setPositions] = useState([]);
 
   const handleDoubleClick = (e) => {
-    setPosition({ x:  e.clientX, y: e.clientY });
-    setShowInput(!showInput);
+    setPosition({ x: e.clientX, y: e.clientY });
+    setShowInput(true);
+    setInputValues([...inputValues, '']);
+    setPositions([...positions, { x: e.clientX, y: e.clientY }]);
   }
 
   const handleBlur = () => {
     setShowInput(false);
   }
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
+  const handleChange = (e, index) => {
+    let newInputValues = [...inputValues];
+    newInputValues[index] = e.target.value;
+    setInputValues(newInputValues);
   }
 
   const fetchMeme = async () => {
@@ -60,30 +64,36 @@ export default function ControlledComponent() {
         <img
           src={memeUrl}
           alt="meme"
-          className='rounded-lg w-[80%] ml-9 object-contain '
+          className='rounded-lg w-[80%] ml-9 object-contain text-white g'
           onDoubleClick={handleDoubleClick}
         /> : ""}
       {showInput ? (
-        <input
-          type='text'
-          value={inputValue}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          style={{ position: 'absolute', left: position.x, top: position.y, background: 'transparent', border: '2px dashed black' }}
-          className = 'font-memefont text-lg'
-        />
+        inputValues.map((inputValue, index) => (
+          <input
+            key={index}
+            type='text'
+            value={inputValue}
+            onChange={(e) => handleChange(e, index)}
+            onBlur={handleBlur}
+            style={{ position: 'absolute', left: position.x, top: position.y, background: 'transparent', border: '2px dashed black' }}
+            className='font-memefont text-lg'
+          />
+        ))
       ) : (
-        <Draggable>
-          <p
-            onDoubleClick={handleDoubleClick}
-            style = {{ position: 'absolute', left: position.x, top: position.y }}
-            className = 'font-memefont text-lg'
-          > {inputValue}
-          </p>
-        </Draggable>
+        inputValues.map((inputValue, index) => (
+          <Draggable>
+            <p
+              key={index}
+              onDoubleClick={handleDoubleClick}
+              style={{ position: 'absolute', left: position.x, top: position.y }}
+              className='font-memefont text-2xl text-white g '
+            > {inputValue}
+            </p>
+          </Draggable>
+        ))
       )}
       <button
-        className='w-[90%] mr-4 ml-3 mt-4  bg-white border hover:bg-slate-700  hover:border-white transition-all hover:text-white border-black rounded-lg p-3 text-black'
+        className='w-[90%] mr-4 ml-3 mt-4 bg-white border hover:bg-slate-700 hover:border-white transition-all hover:text-white border-black rounded-lg p-3 text-black'
         onClick={fetchMeme}
       >
         Get a new meem image 🎉
