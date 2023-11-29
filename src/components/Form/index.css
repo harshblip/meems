@@ -1,9 +1,15 @@
+* {
+    transition: all 0.2s smooth;
+}
+
 .f {
     background: #f3f1f1;
 }
 
 .header {
-    background: linear-gradient(to bottom, black 0%, black 25%, white 20%, #f3f1f1 100%);
+    background: linear-gradient(to bottom, black 0%, black 20%, white 0%, #f3f1f1 100%);
+    position: absolute;
+    width: 25rem;
 }
 
 input:active { 
