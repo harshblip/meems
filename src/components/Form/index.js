@@ -1,9 +1,9 @@
 import { useRef, useState } from 'react';
-import arpitB from '../../media/arpit-bala-celebration.gif';
 import Draggable from 'react-draggable';
 import { exportComponentAsPNG } from 'react-component-export-image';
 import './index.css'
 import { createRef } from 'react';
+import Header from '../Header'
 
 export default function ControlledComponent() {
   const [memeUrl, setMemeUrl] = useState('');
@@ -38,6 +38,7 @@ export default function ControlledComponent() {
       method: 'GET',
     };
     setcliked(true);
+    setInputValues([]);
     try {
       const response = await fetch(url, options);
       const result = await response.json();
@@ -67,22 +68,14 @@ export default function ControlledComponent() {
   const memeRef = createRef();
 
   return (
-    <div className='header justify-center space-x-5 font-notosans flex flex-col rounded-xl p-8'>
-      <div className='flex'>
-        <img
-          src={arpitB}
-          alt='feels'
-          width='80'
-          className='bg-transparent rounded-xl object-contain'
-        />
-        <h2 className='text-white text-2xl'> Meem Generator </h2>
-      </div>
-      <div ref={memeRef} className='relative'>
+    <>
+    <Header />
+      <div ref={memeRef} className='mt-4'>
         {cliked ?
           <img
             src={memeUrl}
             alt={alt}
-            className='rounded-lg w-[80%] ml-9 mt-20 object-contain text-white g'
+            className='rounded-lg w-[80%] h-auto ml-9 object-contain text-white g'
             onDoubleClick={handleDoubleClick}
           /> : ""}
         {showInput ? (
@@ -94,7 +87,7 @@ export default function ControlledComponent() {
               onChange={(e) => handleChange(e, index)}
               onBlur={handleBlur}
               style={{ position: 'absolute', left: positions[index].x, top: positions[index].y, background: 'transparent', border: '2px dashed black' }}
-              className='font-memefont text-lg'
+              className='font-memefont text-lg text-white g'
             />
           ))
         ) : (
@@ -116,15 +109,15 @@ export default function ControlledComponent() {
       <div className='flex'>
 
         <button
-          className='w-[70%] mr-4 ml-3 mt-4 h-18  bg-white border hover:bg-slate-700 hover:border-white transition-all hover:text-white border-black rounded-lg p-3 text-black'
+          className='p-[1em] mr-4 ml-3 mt-4 h-18  bg-white border hover:bg-slate-700 hover:border-white transition-all hover:text-white border-black rounded-lg  text-black'
           onClick={fetchMeme}
         >
           Get a new meem image 🎉
         </button>
-        <button className='w-[20%] mr-4 ml-3 mt-4 bg-white border hover:bg-slate-700 hover:border-white transition-all hover:text-white border-black rounded-lg p-3 text-black'
+        <button className='w-[20%] mr-4 ml-3 mt-4 bg-white border hover:bg-slate-700 hover:border-white transition-all hover:text-white border-black rounded-lg p-[1em] text-black'
           onClick={(e) => exportComponentAsPNG(memeRef)}
         >save</button>
       </div>
-    </div>
+    </>
   )
 };
